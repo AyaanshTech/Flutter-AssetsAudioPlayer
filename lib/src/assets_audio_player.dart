@@ -136,6 +136,8 @@ class AssetsAudioPlayer {
   static final NotificationSettings defaultNotificationSettings =
       const NotificationSettings();
 
+  bool _sendCallbackonFinished = true;
+
   //region notification click
   static MethodChannel _notificationOpenChannel =
       const MethodChannel('assets_audio_player_notification');
@@ -567,7 +569,9 @@ class AssetsAudioPlayer {
                 hasNext: false,
                 playlist: current.playlist,
               );
-              _playlistAudioFinished.add(finishedPlay);
+              if (_sendCallbackonFinished) {
+                _playlistAudioFinished.add(finishedPlay);
+              }
             }
             _playlistFinished.add(true);
             _current.add(null);
@@ -998,11 +1002,13 @@ class AssetsAudioPlayer {
     AudioFocusStrategy? audioFocusStrategy,
     NotificationSettings? notificationSettings,
   }) async {
+    _sendCallbackonFinished = true;
     final _autoStart = autoStart ?? _DEFAULT_AUTO_START;
     final _loopMode = loopMode ?? _DEFAULT_LOOP_MODE;
     final _audioFocusStrategy = audioFocusStrategy ?? defaultFocusStrategy;
     final currentAudio = _lastOpenedAssetsAudio;
     final _headPhoneStrategy = headPhoneStrategy ?? _DEFAULT_HEADPHONE_STRATEGY;
+
     if (audioInput != null) {
       _respectSilentMode = respectSilentMode ?? _DEFAULT_RESPECT_SILENT_MODE;
       _showNotification = showNotification ?? _DEFAULT_SHOW_NOTIFICATION;
@@ -1370,7 +1376,8 @@ class AssetsAudioPlayer {
   /// Tells the media player to stop the current song, then release the MediaPlayer
   ///     _assetsAudioPlayer.stop();
   ///
-  Future<void> stop() async {
+  Future<void> stop({bool sendCallback = true}) async {
+    _sendCallbackonFinished = sendCallback;
     return _stop(removeNotification: true);
   }
 
