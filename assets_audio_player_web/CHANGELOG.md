@@ -1,3 +1,24 @@
+## 3.0.3+9
+* Fix mimType issue mp3 files from urls without extension #630
+* Fix web Null issue 
+## 3.0.3+8
+* Fix android 12 / api 31 issue.
+* Fix macOs build issue
+* Fix web assets issue for Web
+
+## 3.0.3+7
+* Fix android 12 / api 31 issue.
+* Fix macOs build issue
+* Fix web assets issue for Web
+## 3.0.3+6
+* Added DRM supports
+* Fix playSpeed for WEB.
+## 3.0.3+5
+* Added pitch controller
+## 3.0.3+4
+* Updated dependencies 
+* Fix duplicate class issue
+* Fix: assetsAudioPlayer.open playSpeed is not work
 ## 3.0.3+3
 * fix duration issue
 ## 3.0.3+2

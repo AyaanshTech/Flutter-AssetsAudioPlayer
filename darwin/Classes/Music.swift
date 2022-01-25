@@ -531,12 +531,13 @@ public class Player : NSObject, AVAudioPlayerDelegate {
             if networkHeaders != nil && networkHeaders!.count > 0 {
                 let asset = AVURLAsset(url: url, options: [
                     "AVURLAssetHTTPHeaderFieldsKey": networkHeaders!,
-                    "AVURLAssetOutOfBandMIMETypeKey": "mp3"
+                    "AVURLAssetOutOfBandMIMETypeKey": "audio/mpeg"
                 ])
                 item = SlowMoPlayerItem(asset: asset)
             } else {
                 item = SlowMoPlayerItem(url: url)
             }
+            item.audioTimePitchAlgorithm = .timeDomain
             self.player = AVQueuePlayer(playerItem: item)
             
             
@@ -590,12 +591,14 @@ public class Player : NSObject, AVAudioPlayerDelegate {
                         #endif
                     }
                     
+                    self?.setPlaySpeed(playSpeed: playSpeed)
+                    
                     if(autoStart == true){
                         self?.play()
                     }
                     
                     self?.setVolume(volume: volume)
-                    self?.setPlaySpeed(playSpeed: playSpeed)
+                  
                     
                     if(seek != nil){
                         self?.seek(to: seek!)
@@ -828,7 +831,7 @@ public class Player : NSObject, AVAudioPlayerDelegate {
     }
     
     func play(){
-        if #available(iOS 10.0, *) {
+        if #available(iOS 10.0, macOS 10.12, *) {
             self.player?.playImmediately(atRate: self.rate)
         } else {
             self.player?.play()

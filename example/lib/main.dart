@@ -9,7 +9,6 @@ import 'player/PositionSeekWidget.dart';
 import 'player/SongsSelector.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   AssetsAudioPlayer.setupNotificationsOpenAction((notification) {
     print(notification.audioId);
     return true;
